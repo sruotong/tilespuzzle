@@ -1,20 +1,31 @@
-<div class="row">
-    <div class="col-6 d-flex align-items-center justify-content-center">
-        <div class="row">
-            <div class="col-12 d-flex justify-content-center p-2">
-                <img class="image-board" #originImg name="originalImage" width="200" alt="Orignial Image"
-                    [src]="'assets/images/isentia.jpg'" (load)="onSourceImageLoaded()">
-            </div>
-            <div class="col-12 d-flex justify-content-center p-2">
-                <button type="button" class="btn btn-success btn-lg" name="startGameButton"
-                    (click)="onStartGame()">START GAME</button>
-            </div>
-        </div>
+<div class="m-2">
+    <div [ngSwitch]="isCompletedFlag" class="message-header d-flex justify-content-center">
+        <h1 *ngSwitchCase="true">
+            Congratulations, you solved puzzle in a total of {{ moves }} moves!In {{timerSeconds}} seconds!
+        </h1>
+        <h1 *ngSwitchCase="false">
+            Time: {{timerSeconds}} seconds.
+        </h1>
     </div>
-    <div class="col-6">
-        <div class="image-board d-flex flex-wrap" [ngStyle]="{'width': tileWidth*3+'px'}">
-            <canvas #tilesCanvas id="tile{{tile}}" *ngFor="let tile of tiles;let i = index;"></canvas>
+    <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center p-2">
+                    <img class="image-board" #originImg name="originalImage" width="200" alt="Orignial Image"
+                        [src]="'assets/images/isentia.jpg'" (load)="onSourceImageLoaded()">
+                </div>
+                <div class="col-12 d-flex justify-content-center p-2">
+                    <button type="button" class="btn btn-success btn-lg" name="startGameButton"
+                        (click)="onStartGame()">START GAME</button>
+                </div>
+            </div>
         </div>
-        <p class="total-moves pt-3">TOTAL MOVES: {{moves}}</p>
+        <div class="col-6">
+            <div class="image-board tile-board d-flex flex-wrap" [ngStyle]="{'width': tileWidth*3+'px'}" dragula="TILES"
+                [(dragulaModel)]="tiles">
+                <canvas #tilesCanvas id="tile{{tile}}" *ngFor="let tile of tiles;let i = index;"></canvas>
+            </div>
+            <p class="total-moves pt-3">TOTAL MOVES: {{moves}}</p>
+        </div>
     </div>
 </div>
